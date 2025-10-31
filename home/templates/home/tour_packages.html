@@ -1,0 +1,21 @@
+{% extends "home/base.html" %}
+
+{% block title %}Tour Packages{% endblock %}
+
+{% block content %}
+    <h2>Tour Packages</h2>
+    {% for package in packages %}
+        <div style="margin-bottom: 2em;">
+            <h2>{{ package.title }}</h2>
+            <div style="display: flex; align-items: flex-start;">
+                {% if package.image %}
+                    <img src="{{ package.image.url }}" alt="Tour Package Image" style="max-width: 100px; margin-right: 16px;">
+                {% endif %}
+                <div style="flex: 1;">
+                    <p>{{ package.content|safe }}</p>
+                </div>
+            </div>
+            <hr>
+        </div>
+    {% endfor %}
+{% endblock %}

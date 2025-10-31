@@ -1,0 +1,26 @@
+{% extends "home/base.html" %}
+
+{% block title %}Nomads{% endblock %}
+
+{% block content %}
+    <h2>Nomads</h2>
+    {% for nomad in nomads %}
+        <div style="margin-bottom: 2em;">
+            <h2>{{ nomad.title }}</h2>
+            <div style="display: flex; align-items: flex-start;">
+                {% if nomad.image %}
+                    <img src="{{ nomad.image.url }}" alt="Nomad Image" style="max-width: 100px; margin-right: 16px;">
+                {% endif %}
+                <div style="flex: 1;">
+                    <p>{{ nomad.description|safe }}</p>
+                </div>
+            </div>
+            {% if nomad.video %}
+                <video controls width="320">
+                    <source src="{{ nomad.video.url }}">
+                </video>
+            {% endif %}
+            <hr>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "home/base.html" %}
+
+{% block title %}Food{% endblock %}
+
+{% block content %}
+    <h2>Mongolian Foods</h2>
+    {% for food in foods %}
+        <div style="margin-bottom: 2em;">
+            <h2>{{ food.title }}</h2>
+            <div style="display: flex; align-items: flex-start;">
+                {% if food.image %}
+                    <img src="{{ food.image.url }}" alt="Food Image" style="max-width: 100px; margin-right: 16px;">
+                {% endif %}
+                <div style="flex: 1;">
+                    <p>{{ food.description|safe }}</p>  <!-- Apply the safe filter here -->
+                </div>
+            </div>
+            {% if food.video %}
+                <video controls width="320">
+                    <source src="{{ food.video.url }}">
+                </video>
+            {% endif %}
+            <hr>
+        </div>
+    {% endfor %}
+{% endblock %}
