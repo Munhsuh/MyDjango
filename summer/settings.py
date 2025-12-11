@@ -21,14 +21,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&+o2h9pq#1&&6yy&559wxgf8m#t1$i8$gyo_g0%cp_=re+g1y+'
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-&+o2h9pq#1&&6yy&559wxgf8m#t1$i8$gyo_g0%cp_=re+g1y+"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() in ("1", "true", "yes")
 
-
-# Instead of the hardcoded ALLOWED_HOSTS, read from an env var (comma-separated) with a safe default:
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "mydjango-zq62.onrender.com,localhost,127.0.0.1").split(",")
+# Read ALLOWED_HOSTS from env (comma-separated) and strip blanks
+ALLOWED_HOSTS = [
+    h.strip()
+    for h in os.environ.get(
+        "ALLOWED_HOSTS", "mydjango-zq62.onrender.com,localhost,127.0.0.1"
+    ).split(",")
+    if h.strip()
+]
 
 
 
@@ -125,8 +133,12 @@ STATIC_URL = 'static/'
 
 # Production static files (collectstatic will place files here)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# Optional: include a local 'static' folder for custom assets
-STATICFILES_DIRS = [BASE_DIR / 'static']
+
+# Optional: include a local 'static' folder for custom assets (only if present)
+if (BASE_DIR / 'static').exists():
+    STATICFILES_DIRS = [BASE_DIR / 'static']
+else:
+    STATICFILES_DIRS = []
 
 # Use WhiteNoise for serving static files in production and compressed cached files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -139,10 +151,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email settings - load sensitive credentials from env
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # or your provider
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'Munhsuh71@gmail.com'
-EMAIL_HOST_PASSWORD = 'iozl tmfl ktlr vqtj'
-CONTACT_EMAIL = 'Munhsuh71@gmail.com'  # recipient
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True").lower() in ("1", "true", "yes")
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "Munhsuh71@gmail.com")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", EMAIL_HOST_USER)
