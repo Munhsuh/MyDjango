@@ -32,11 +32,13 @@ DEBUG = os.environ.get("DEBUG", "False").lower() in ("1", "true", "yes")
 # Read ALLOWED_HOSTS from env (comma-separated) and strip blanks
 
 ALLOWED_HOSTS = [
-    "mydjango-1-ihbw.onrender.com",
-    "localhost",
-    "127.0.0.1",
+    h.strip()
+    for h in os.environ.get(
+        "ALLOWED_HOSTS", "hello-galaxy.onrender.com,localhost,127.0.0.1"
+    ).split(",")
+    if h.strip()
 ]
-    
+
 
 # Application definition
 
@@ -128,15 +130,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
-# Production static files (collectstatic will place files here)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Optional: include a local 'static' folder for custom assets (only if present)
 STATICFILES_DIRS = [BASE_DIR / 'static'] if (BASE_DIR / 'static').exists() else []
 
-# Use WhiteNoise for serving static files in production and compressed cached files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Use manifest storage only in production (so missing static file references don't break debug)
+STATICFILES_STORAGE = (
+    'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    if not DEBUG
+    else 'django.contrib.staticfiles.storage.StaticFilesStorage'
+)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
