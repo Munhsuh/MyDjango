@@ -33,7 +33,7 @@ DEBUG = os.environ.get("DEBUG", "False").lower() in ("1", "true", "yes")
 ALLOWED_HOSTS = [
     h.strip()
     for h in os.environ.get(
-        "ALLOWED_HOSTS", "mydjango-zq62.onrender.com,localhost,127.0.0.1"
+        "ALLOWED_HOSTS", ".onrender.com,localhost,127.0.0.1"
     ).split(",")
     if h.strip()
 ]
