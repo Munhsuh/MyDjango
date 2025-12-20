@@ -34,7 +34,7 @@ DEBUG = os.environ.get("DEBUG", "False").lower() in ("1", "true", "yes")
 ALLOWED_HOSTS = [
     h.strip()
     for h in os.environ.get(
-        "ALLOWED_HOSTS", "hello-galaxy.onrender.com,localhost,127.0.0.1"
+        "ALLOWED_HOSTS", "mydjango-1-ihbw.onrender.com,localhost,127.0.0.1"
     ).split(",")
     if h.strip()
 ]
