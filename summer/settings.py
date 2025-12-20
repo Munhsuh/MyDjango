@@ -27,17 +27,11 @@ SECRET_KEY = os.environ.get(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() in ("1", "true", "yes")
+DEBUG = False
 
 # Read ALLOWED_HOSTS from env (comma-separated) and strip blanks
 
-ALLOWED_HOSTS = [
-    h.strip()
-    for h in os.environ.get(
-        "ALLOWED_HOSTS", "mydjango-1-ihbw.onrender.com,localhost,127.0.0.1"
-    ).split(",")
-    if h.strip()
-]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
