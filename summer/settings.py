@@ -12,7 +12,12 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-import dj_database_url
+
+# Safe import for dj_database_url so missing package won't crash startup
+try:
+    import dj_database_url
+except Exception:
+    dj_database_url = None
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,7 +28,7 @@ DEBUG = os.environ.get("DEBUG", "False").lower() in ("1", "true", "yes")
 ALLOWED_HOSTS = [
     h.strip()
     for h in os.environ.get(
-        "ALLOWED_HOSTS", "hello_galaxy.onrender.com,localhost,127.0.0.1"
+        "ALLOWED_HOSTS", "hello-galaxy.onrender.com,localhost,127.0.0.1"
     ).split(",")
     if h.strip()
 ]
@@ -72,8 +77,16 @@ TEMPLATES = [
 WSGI_APPLICATION = "summer.wsgi.application"
 
 # Database: use DATABASE_URL if provided, else fallback to sqlite
-db_config = dj_database_url.config(conn_max_age=600)
-DATABASES = {"default": db_config or {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}}
+if dj_database_url:
+    db_config = dj_database_url.config(conn_max_age=600)
+else:
+    db_config = None
+
+DATABASES = {
+    "default": db_config
+    if db_config
+    else {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}
+}
 
 # Password validators
 AUTH_PASSWORD_VALIDATORS = [
