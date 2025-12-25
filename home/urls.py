@@ -17,3 +17,10 @@ urlpatterns = [
     # ... other URLs ...
     path('guestbook/', views.guestbook, name='guestbook'),
 ]
+
+
+from .views import load_data_view
+
+urlpatterns += [
+    path('load-data/', load_data_view),
+]

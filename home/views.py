@@ -59,3 +59,18 @@ def guestbook(request):
 
     entries = GuestbookEntry.objects.order_by('-created_at')
     return render(request, 'home/guestbook.html', {'form': form, 'entries': entries})
+
+
+
+
+
+
+from django.http import HttpResponse
+from django.core.management import call_command
+
+def load_data_view(request):
+    try:
+        call_command('loaddata', 'data.json')
+        return HttpResponse("Data loaded successfully! ✅ Remove this view immediately after.")
+    except Exception as e:
+        return HttpResponse(f"Error loading data: {e}")
