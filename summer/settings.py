@@ -102,19 +102,24 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Static & media
-STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
+# Static files (CSS, JS, images in static/)
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # for collectstatic
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
+# Whitenoise config for production
 STATICFILES_STORAGE = (
     "whitenoise.storage.CompressedManifestStaticFilesStorage"
     if not DEBUG
     else "django.contrib.staticfiles.storage.StaticFilesStorage"
 )
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+# Media files (uploaded images)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
