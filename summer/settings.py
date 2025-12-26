@@ -12,12 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
-# Safe import for dj_database_url so missing package won't crash startup
-try:
-    import dj_database_url
-except Exception:
-    dj_database_url = None
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,16 +73,16 @@ TEMPLATES = [
 WSGI_APPLICATION = "summer.wsgi.application"
 
 # Database: use DATABASE_URL if provided, else fallback to sqlite
-if dj_database_url:
-    db_config = dj_database_url.config(conn_max_age=600)
-else:
-    db_config = None
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 DATABASES = {
-    "default": db_config
-    if db_config
-    else {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db.sqlite3"}
+    "default": dj_database_url.config(
+        default=DATABASE_URL,
+        conn_max_age=600,
+        ssl_require=True,
+    )
 }
+
 
 # Password validators
 AUTH_PASSWORD_VALIDATORS = [
