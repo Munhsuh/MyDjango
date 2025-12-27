@@ -73,14 +73,26 @@ TEMPLATES = [
 WSGI_APPLICATION = "summer.wsgi.application"
 
 # Database: use DATABASE_URL if provided, else fallback to sqlite
-DATABASE_URL = os.environ.get("DATABASE_URL")
+
+
+# Optional: dj_database_url may not be installed locally yet
+try:
+    import dj_database_url
+except ImportError:
+    dj_database_url = None
+
+# Database configuration
+db_config = None
+if dj_database_url:
+    db_config = dj_database_url.config(conn_max_age=600)
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=DATABASE_URL,
-        conn_max_age=600,
-        ssl_require=True,
-    )
+    "default": db_config
+    if db_config
+    else {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
 
@@ -124,6 +136,6 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.environ.get("EMAIL_HOST", "smtp.gmail.com")
 EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
 EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", "True").lower() in ("1", "true", "yes")
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
-CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", EMAIL_HOST_USER)
+EMAIL_HOST_USER = os.environ.get("Munhsuh71@gmail.com", "")
+EMAIL_HOST_PASSWORD = os.environ.get("iozl tmfl ktlr vqtj"")
+CONTACT_EMAIL = os.environ.get("Munhsuh71@gmail.com", EMAIL_HOST_USER)
