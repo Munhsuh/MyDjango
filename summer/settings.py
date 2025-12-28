@@ -82,13 +82,14 @@ except ImportError:
     dj_database_url = None
 
 # Database configuration
-db_config = None
-if dj_database_url:
-    db_config = dj_database_url.config(conn_max_age=600)
+
+
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 DATABASES = {
-    "default": db_config
-    if db_config
+    "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+    if DATABASE_URL
     else {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
