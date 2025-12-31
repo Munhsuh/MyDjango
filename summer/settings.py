@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "home",
     "django_summernote",
+    "cloudinary",
+    "cloudinary_storage",
 ]
 
 MIDDLEWARE = [
@@ -129,8 +131,7 @@ STATICFILES_STORAGE = (
 )
 
 # Media files (uploaded images)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+
 
 
 
@@ -155,4 +156,15 @@ CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", EMAIL_HOST_USER)
 
 
 
+# =========================
+# Cloudinary Configuration
+# =========================
+
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+}
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
