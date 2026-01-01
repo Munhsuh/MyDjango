@@ -128,11 +128,18 @@ USE_TZ = True
 
 # Static files (CSS, JS, images in static/)
 
+
+
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = []   # <-- THIS is critical
+WHITENOISE_USE_FINDERS = True
 
 
+# Local development only
+if DEBUG:
+    STATICFILES_DIRS = [BASE_DIR / "static"]
+else:
+    STATICFILES_DIRS = []
 
 
 
