@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from dotenv import load_dotenv
+load_dotenv()
+
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,18 +38,22 @@ ALLOWED_HOSTS = [
 ]
 
 # Apps
+
 INSTALLED_APPS = [
+    "cloudinary_storage",
+    "cloudinary",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "home",
+
     "django_summernote",
-    "cloudinary",
-    "cloudinary_storage",
+    "home",
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -165,6 +172,9 @@ CLOUDINARY_STORAGE = {
     "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
     "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
 }
+
+MEDIA_URL = "/media/"
+
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
