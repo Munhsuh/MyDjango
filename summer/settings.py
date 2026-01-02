@@ -14,11 +14,14 @@ from pathlib import Path
 import os
 import dj_database_url
 from dotenv import load_dotenv
-load_dotenv()
+
 
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Explicitly load .env from project root
+load_dotenv(dotenv_path=BASE_DIR / ".env")
 
 # Security
 SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-dev-placeholder")
@@ -54,6 +57,14 @@ INSTALLED_APPS = [
     "home",
 ]
 
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -145,11 +156,6 @@ else:
 
 
 # Whitenoise config for production
-STATICFILES_STORAGE = (
-    "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    if not DEBUG
-    else "django.contrib.staticfiles.storage.StaticFilesStorage"
-)
 
 # Media files (uploaded images)
 
@@ -181,14 +187,30 @@ CONTACT_EMAIL = os.environ.get("CONTACT_EMAIL", EMAIL_HOST_USER)
 # Cloudinary Configuration
 # =========================
 
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
-}
+
 
 MEDIA_URL = "/media/"
 
 
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
+
+
+# settings.py
+
+ # MUST already exist (usually at top)
+
+# ... all your existing settings above ...
+
+
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
+)
 

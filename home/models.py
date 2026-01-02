@@ -1,6 +1,7 @@
 from django.db import models
 from PIL import Image
 from django.core.exceptions import ValidationError
+from cloudinary.models import CloudinaryField
 
 def resize_image(image, max_size):
     """Resizes an image to the given maximum size."""
@@ -40,6 +41,7 @@ class Nomad(models.Model):
 
 class TourPackage(models.Model):
     title = models.CharField(max_length=200)
+    image = CloudinaryField('image', blank=True, null=True)
     content = models.TextField()
     image = models.ImageField(upload_to='tourpackage_images/', null=True, blank=True)  # Add this line
     created_at = models.DateTimeField(auto_now_add=True)
