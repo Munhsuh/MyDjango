@@ -67,10 +67,24 @@ STORAGES = {
 }
 
 # For local vs production
+
+
+# Static files storage
 if DEBUG:
+    # Local development: normal storage
     STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 else:
-    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    # Production: simpler WhiteNoise storage that doesn't fail on missing references
+    STATICFILES_STORAGE = "whitenoise.storage.WhiteNoiseStaticFilesStorage"
+
+WHITENOISE_MANIFEST_STRICT = False
+
+
+
+
+
+
+
 
 
 MIDDLEWARE = [

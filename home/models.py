@@ -1,14 +1,149 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    image = models.ImageField(upload_to="post_images/", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Food(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to="food_images/", null=True, blank=True)
+    video = models.FileField(upload_to="food_videos/", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Nomad(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    image = models.ImageField(upload_to="nomad_images/", null=True, blank=True)
+    video = models.FileField(upload_to="nomad_videos/", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+class TourPackage(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    image = models.ImageField(upload_to="tourpackage_images/", null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    def clean(self):
+        if len(self.title) < 5:
+            raise ValidationError("Title must be at least 5 characters long.")
+
+
+class GuestbookEntry(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
+
+from django.db import models
 from PIL import Image
 from django.core.exceptions import ValidationError
 from cloudinary.models import CloudinaryField
 
+from django.conf import settings
+
+
 def resize_image(image, max_size):
-    """Resizes an image to the given maximum size."""
-    img_path = image.path
-    img = Image.open(img_path)
-    img.thumbnail(max_size)
-    img.save(img_path)
+    
+    
+    if not image:
+        return
+
+    # Cloudinary images do NOT have .path
+    if not hasattr(image, "path"):
+        return
+
+    try:
+        img = Image.open(image.path)
+        img.thumbnail(max_size)
+        img.save(image.path)
+    except Exception as e:
+        # Never crash admin
+        print("Image resize skipped:", e)
+
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -71,4 +206,4 @@ class GuestbookEntry(models.Model):
         return self.name
 
 
-
+"""
