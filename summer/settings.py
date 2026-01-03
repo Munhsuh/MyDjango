@@ -57,33 +57,31 @@ INSTALLED_APPS = [
     "home",
 ]
 
+
+
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
+
 
 # For local vs production
 
 
 # Static files storage
+# Static files storage
 if DEBUG:
-    # Local development: normal storage
     STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 else:
-    # Production: simpler WhiteNoise storage that doesn't fail on missing references
     STATICFILES_STORAGE = "whitenoise.storage.WhiteNoiseStaticFilesStorage"
 
+
+
 WHITENOISE_MANIFEST_STRICT = False
-
-
-
-
-
-
 
 
 
