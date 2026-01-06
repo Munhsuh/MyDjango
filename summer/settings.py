@@ -64,11 +64,6 @@ STORAGES = {
 
 # Static files storage
 # Static files storage
-if DEBUG:
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-else:
-    STATICFILES_STORAGE = "whitenoise.storage.WhiteNoiseStaticFilesStorage"
-
 
 
 WHITENOISE_MANIFEST_STRICT = False
@@ -110,10 +105,6 @@ WSGI_APPLICATION = "summer.wsgi.application"
 
 
 # Optional: dj_database_url may not be installed locally yet
-try:
-    import dj_database_url
-except ImportError:
-    dj_database_url = None
 
 # Database configuration
 
@@ -211,15 +202,11 @@ CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
 # ... all your existing settings above ...
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://mydjango-1-ihbw.onrender.com",
+]
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-
-cloudinary.config(
-    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    api_key=os.environ.get("CLOUDINARY_API_KEY"),
-    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
-)
 
