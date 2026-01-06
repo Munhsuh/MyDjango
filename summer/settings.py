@@ -202,11 +202,7 @@ CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 
 # ... all your existing settings above ...
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://mydjango-1-ihbw.onrender.com",
-]
 
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 
