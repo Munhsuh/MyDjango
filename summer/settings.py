@@ -19,6 +19,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-dev-placeholder")
 
 DEBUG = os.environ.get("DEBUG", "False").lower() in ("1", "true", "yes")
 
+# Allowed hosts:
+
+"""
 
 
 ALLOWED_HOSTS = [
@@ -28,12 +31,21 @@ ALLOWED_HOSTS = [
     ).split(",")
     if h.strip()
 ]
+ """
+
+
+# allowed hosts:
+
+
+#allowed hostrs
+
+ALLOWED_HOSTS = ["*"]
 
 # Apps
 
 INSTALLED_APPS = [
-    "cloudinary_storage",
-    "cloudinary",
+    #"cloudinary_storage",
+    #"cloudinary",
 
     "django.contrib.admin",
     "django.contrib.auth",
@@ -48,15 +60,26 @@ INSTALLED_APPS = [
 
 
 
+###
+
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+#     },
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+#     },
+# }
+
 STORAGES = {
     "default": {
-        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-    
     },
 }
+
 
 
 # For local vs production
