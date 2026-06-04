@@ -62,14 +62,6 @@ INSTALLED_APPS = [
 
 ###
 
-# STORAGES = {
-#     "default": {
-#         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
-#     },
-#     "staticfiles": {
-#         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-#     },
-# }
 
 STORAGES = {
     "default": {
