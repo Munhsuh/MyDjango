@@ -44,8 +44,8 @@ ALLOWED_HOSTS = ["*"]
 # Apps
 
 INSTALLED_APPS = [
-    #"cloudinary_storage",
-    #"cloudinary",
+    "cloudinary_storage",
+    "cloudinary",
 
     "django.contrib.admin",
     "django.contrib.auth",
@@ -60,18 +60,15 @@ INSTALLED_APPS = [
 
 
 
-###
-
-
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    
     },
 }
-
 
 
 # For local vs production
