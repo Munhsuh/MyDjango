@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+"""from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
@@ -74,3 +74,8 @@ def load_data_view(request):
         return HttpResponse("Data loaded successfully! ✅ Remove this view immediately after.")
     except Exception as e:
         return HttpResponse(f"Error loading data: {e}")
+        """
+from django.http import HttpResponse
+
+def home(request):
+    return HttpResponse("Hello World")

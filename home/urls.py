@@ -11,7 +11,6 @@ urlpatterns = [
     path('food/', views.food, name='food'),
     path('nomads/', views.nomads, name='nomads'),
     path('contact/', views.contact, name='contact'),  # Add this line
-    path('contact/', views.contact, name='contact'),
     path('contact/success/', views.contact_success, name='contact_success'),
 
     # ... other URLs ...
